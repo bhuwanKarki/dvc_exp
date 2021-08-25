@@ -33,55 +33,55 @@ stages:
       size: 2391
     params:
       params.yaml:
-        featurize.max_features: 500
-        featurize.ngrams: 1
+        featurize.max_features: 3000
+        featurize.ngrams: 2
     outs:
     - path: data/features
-      md5: 2b5e0fdd787b569b4fcb4bafa543d270.dir
-      size: 7083899
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
     - path: logs/featurize.out
-      md5: 397e8af2ac64d7609f8a2137d71d2608
-      size: 300
+      md5: e5d1f1c21de056b2e0805d31d4cee7c5
+      size: 302
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: 2b5e0fdd787b569b4fcb4bafa543d270.dir
-      size: 7083899
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
     - path: src/train.py
       md5: 9ab95496b29b6ea3418bbf20b9fe3473
       size: 964
     params:
       params.yaml:
-        train.min_split: 2
+        train.min_split: 64
         train.n_est: 100
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: a12a0c888b8f57bc1edd8b9d725b9dd2
-      size: 5365106
+      md5: b4c4856b0a8262c0056a577735d95f8b
+      size: 2206859
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features scores.json prc.json roc.json
     deps:
     - path: data/features
-      md5: 2b5e0fdd787b569b4fcb4bafa543d270.dir
-      size: 7083899
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
     - path: model.pkl
-      md5: a12a0c888b8f57bc1edd8b9d725b9dd2
-      size: 5365106
+      md5: b4c4856b0a8262c0056a577735d95f8b
+      size: 2206859
     - path: src/evaluate.py
       md5: fb7b5209c9237ea6cf63550e5fe9b817
       size: 1943
     outs:
     - path: prc.json
-      md5: d49f8574faa5b8d2155295d6f0b2e74b
-      size: 7350
+      md5: 4c0d799f480cd95e29a872516f4eea54
+      size: 135185
     - path: roc.json
-      md5: d554d2222d5cd9168aa27338b35fceef
-      size: 6783
+      md5: a82d40c326dba1bbbc446a5be83dffd9
+      size: 55101
     - path: scores.json
-      md5: 7d6db3ad682b1dc3fe96d342ff231dc2
+      md5: 8f7ae54edbbe9a222b693bce8985cb80
       size: 73
